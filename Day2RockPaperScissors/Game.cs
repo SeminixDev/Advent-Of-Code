@@ -9,22 +9,47 @@ namespace Day2RockPaperScissors
 
         public Game(char elfPlay, char playerPlay)
         {
-            this.elfPlay = CharToPlay(elfPlay);
-            this.playerPlay = CharToPlay(playerPlay);
+            this.elfPlay = GetElfPlay(elfPlay);
+            this.playerPlay = CalcPlayerPlay(playerPlay);
+            CheckPlayerPlayOverflow();
         }
 
-        static int CharToPlay(char play)
+        int CalcPlayerPlay(char play)
+        {
+            switch(play)
+            {
+                case 'X':
+                    return elfPlay - 1;
+                case 'Y':
+                    return elfPlay;
+                case  'Z':
+                    return elfPlay + 1;
+                default:
+                    throw new Exception("Can't convert input");
+            }
+        }
+
+        void CheckPlayerPlayOverflow()
+        {
+            if (playerPlay < 1)
+            {
+                playerPlay = 3;
+            }
+            else if (playerPlay > 3)
+            {
+                playerPlay = 1;
+            }
+        }
+
+        static int GetElfPlay(char play)
         {
             switch(play)
             {
                 case 'A':
-                case 'X':
                     return 1;
                 case 'B':
-                case 'Y':
                     return 2;
                 case 'C':
-                case 'Z':
                     return 3;
                 default:
                     throw new Exception("Can't convert input");
